@@ -35,15 +35,16 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="animate-hero-zoom object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75 animate-hero-drift" />
+        <div className="animate-pulse-soft pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
         <header className="absolute inset-x-0 top-0 z-50">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-12">
             <Link
               href="/"
-              className="flex items-center gap-3 transition hover:opacity-90"
+              className="flex items-center gap-3 transition duration-300 hover:opacity-90 hover:scale-[1.02]"
             >
               <Image
                 src="/image.png"
@@ -68,7 +69,7 @@ export default function Home() {
                   <li key={item}>
                     <Link
                       href={href}
-                      className="block rounded-full px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+                      className="block rounded-full px-4 py-2 text-sm font-medium text-white/80 transition duration-300 hover:bg-white/10 hover:text-white hover:shadow-[0_0_24px_rgba(255,255,255,0.08)]"
                     >
                       {item}
                     </Link>
@@ -80,46 +81,58 @@ export default function Home() {
         </header>
 
         <div className="relative z-10 flex min-h-screen items-start">
-          <div className="mx-auto w-full max-w-7xl px-6 pt-44 pb-16 sm:px-8 sm:pt-48 lg:px-12 lg:pt-52">
-          <div className="max-w-5xl">
-            <h1 className="max-w-5xl text-4xl leading-tight font-semibold text-balance text-white sm:text-5xl lg:text-7xl">
-              We Power the Teams Behind Great Games
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-pretty text-white/68 sm:text-lg sm:leading-8">
-              From engineering and QA to LiveOps and strategic partnerships,
-              we help game studios build better experiences and scale
-              long-term.
-            </p>
-            <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-              <Link
-                href="#contact"
-                className="inline-flex min-w-44 items-center justify-center rounded-md border border-white/45 bg-white/14 px-6 py-3 text-sm font-medium text-white shadow-[0_16px_44px_rgba(0,0,0,0.34)] backdrop-blur-md transition hover:border-white/65 hover:bg-white/20"
+          <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-44 sm:px-8 sm:pt-48 lg:px-12 lg:pt-52">
+            <div className="max-w-5xl">
+              <h1
+                className="animate-fade-up max-w-5xl text-4xl font-semibold leading-tight text-balance text-white sm:text-5xl lg:text-7xl"
+                style={{ animationDelay: "0.12s" }}
               >
-                Partner With Us
-              </Link>
-              <Link
-                href="#games"
-                className="inline-flex min-w-44 items-center justify-center rounded-md border border-white/18 bg-black/35 px-6 py-3 text-sm font-medium text-white/86 backdrop-blur-md transition hover:border-white/35 hover:bg-black/25 hover:text-white"
+                We Power the Teams Behind Great Games
+              </h1>
+              <p
+                className="animate-fade-up mt-5 max-w-2xl text-base leading-7 text-pretty text-white/68 sm:text-lg sm:leading-8"
+                style={{ animationDelay: "0.24s" }}
               >
-                Explore Games
-              </Link>
-            </div>
-            <div className="mt-10">
-              <p className="text-xs font-medium text-white/45">Trusted by</p>
-              <div className="mt-4 flex max-w-3xl flex-wrap items-center gap-x-8 gap-y-5">
-                {showcaseLogos.map((logo, index) => (
-                  <Image
-                    key={logo}
-                    src={logo}
-                    alt={`Trusted partner ${index + 1}`}
-                    width={132}
-                    height={64}
-                    className="max-h-11 w-auto max-w-24 object-contain opacity-100 grayscale contrast-150 brightness-125 mix-blend-screen"
-                  />
-                ))}
+                From engineering and QA to LiveOps and strategic partnerships,
+                we help game studios build better experiences and scale
+                long-term.
+              </p>
+              <div className="mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href="#contact"
+                  className="animate-fade-up inline-flex min-w-44 items-center justify-center rounded-md border border-white/45 bg-white/14 px-6 py-3 text-sm font-medium text-white shadow-[0_16px_44px_rgba(0,0,0,0.34)] backdrop-blur-md transition duration-300 hover:border-white/65 hover:bg-white/20 hover:translate-y-[-1px]"
+                  style={{ animationDelay: "0.36s" }}
+                >
+                  Partner With Us
+                </Link>
+                <Link
+                  href="#games"
+                  className="animate-fade-up inline-flex min-w-44 items-center justify-center rounded-md border border-white/18 bg-black/35 px-6 py-3 text-sm font-medium text-white/86 backdrop-blur-md transition duration-300 hover:border-white/35 hover:bg-black/25 hover:text-white hover:translate-y-[-1px]"
+                  style={{ animationDelay: "0.44s" }}
+                >
+                  Explore Games
+                </Link>
+              </div>
+              <div
+                className="animate-fade-up mt-10"
+                style={{ animationDelay: "0.54s" }}
+              >
+                <p className="text-xs font-medium text-white/45">Trusted by</p>
+                <div className="mt-4 flex max-w-3xl flex-wrap items-center gap-x-8 gap-y-5">
+                  {showcaseLogos.map((logo, index) => (
+                    <Image
+                      key={logo}
+                      src={logo}
+                      alt={`Trusted partner ${index + 1}`}
+                      width={132}
+                      height={64}
+                      className="animate-fade-up max-h-11 w-auto max-w-24 object-contain opacity-100 grayscale contrast-150 brightness-125 mix-blend-screen transition duration-300 hover:scale-105 hover:brightness-150"
+                      style={{ animationDelay: `${0.62 + index * 0.08}s` }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       </section>
@@ -131,11 +144,11 @@ export default function Home() {
         >
           <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium text-white/45">Our Games</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <p className="animate-fade-up text-sm font-medium text-white/45">Our Games</p>
+              <h2 className="animate-fade-up mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl" style={{ animationDelay: "0.08s" }}>
                 Games we helped build.
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-white/62">
+              <p className="animate-fade-up mt-5 max-w-2xl text-base leading-7 text-white/62" style={{ animationDelay: "0.16s" }}>
                 These projects were created with partner studios, with our team
                 contributing engineering, QA, LiveOps, and production support.
               </p>
@@ -145,7 +158,8 @@ export default function Home() {
               {games.map((game) => (
                 <article
                   key={game.name}
-                  className="group overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]"
+                  className="animate-fade-up group overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]"
+                  style={{ animationDelay: game.name === "Catch A Fade 2" ? "0.2s" : "0.3s" }}
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <Image
@@ -189,17 +203,18 @@ export default function Home() {
         >
           <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium text-white/45">Join our team</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <p className="animate-fade-up text-sm font-medium text-white/45">Join our team</p>
+              <h2 className="animate-fade-up mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl" style={{ animationDelay: "0.08s" }}>
                 Help studios build better games.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-white/62">
+              <p className="animate-fade-up mt-5 max-w-xl text-base leading-7 text-white/62" style={{ animationDelay: "0.16s" }}>
                 We work with people who care about execution, taste, and the
                 small details that make games feel better to play.
               </p>
               <Link
                 href="#contact"
-                className="mt-8 inline-flex items-center justify-center rounded-md border border-white/24 bg-white/10 px-5 py-3 text-sm font-medium text-white transition hover:border-white/45 hover:bg-white/16"
+                className="animate-fade-up mt-8 inline-flex items-center justify-center rounded-md border border-white/24 bg-white/10 px-5 py-3 text-sm font-medium text-white transition duration-300 hover:border-white/45 hover:bg-white/16 hover:translate-y-[-1px]"
+                style={{ animationDelay: "0.24s" }}
               >
                 Apply through contact
               </Link>
@@ -213,11 +228,11 @@ export default function Home() {
         >
           <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-medium text-white/45">Contact us</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <p className="animate-fade-up text-sm font-medium text-white/45">Contact us</p>
+              <h2 className="animate-fade-up mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl" style={{ animationDelay: "0.08s" }}>
                 Tell us what you are building.
               </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-white/62">
+              <p className="animate-fade-up mt-5 max-w-xl text-base leading-7 text-white/62" style={{ animationDelay: "0.16s" }}>
                 The fastest way to get a useful reply is to include the project
                 link, what you need help with, your timeline, and the decision
                 maker we should speak with.

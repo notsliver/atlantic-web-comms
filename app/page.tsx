@@ -302,15 +302,9 @@ export default async function Home() {
                         href={game.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="group/cta inline-flex shrink-0 items-center gap-2 rounded-md border border-white/30 bg-white/14 px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_34px_rgba(0,0,0,0.34)] backdrop-blur-md transition duration-300 hover:border-white/55 hover:bg-white/22 hover:translate-y-[-1px]"
+                        className="inline-flex shrink-0 items-center justify-center rounded-md border border-red-200/35 bg-red-200/12 px-5 py-3 text-sm font-semibold text-red-50 shadow-[0_12px_34px_rgba(0,0,0,0.34),0_0_24px_rgba(254,202,202,0.08)] backdrop-blur-md transition duration-300 hover:border-red-200/60 hover:bg-red-200/18 hover:text-white hover:shadow-[0_14px_38px_rgba(0,0,0,0.38),0_0_32px_rgba(254,202,202,0.14)] hover:translate-y-[-1px]"
                       >
                         <span>{game.cta}</span>
-                        <span
-                          aria-hidden="true"
-                          className="transition duration-300 group-hover/cta:translate-x-1"
-                        >
-                          -&gt;
-                        </span>
                       </a>
                     </div>
                   </div>

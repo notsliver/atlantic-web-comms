@@ -89,6 +89,70 @@ html {
   }
 }
 
+@keyframes trusted-focus {
+  0%,
+  100% {
+    box-shadow: none;
+    transform: translate3d(0, 0, 0);
+  }
+  10%,
+  24% {
+    box-shadow: 0 10px 30px rgb(255 255 255 / 0.08);
+    transform: translate3d(0, -3px, 0) scale(1.04);
+  }
+}
+
+@keyframes trusted-logo-focus {
+  0%,
+  100% {
+    opacity: 0.52;
+    filter: grayscale(1) contrast(1.08) brightness(1.02);
+  }
+  10%,
+  24% {
+    opacity: 1;
+    filter: grayscale(1) contrast(1.55) brightness(1.65);
+  }
+}
+
+@keyframes trusted-sweep {
+  0%,
+  18% {
+    opacity: 0;
+    transform: translate3d(-120%, 0, 0) skewX(-18deg);
+  }
+  24% {
+    opacity: 1;
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translate3d(220%, 0, 0) skewX(-18deg);
+  }
+}
+
+@keyframes trusted-marker {
+  0%,
+  18% {
+    transform: translate3d(0%, 0, 0);
+  }
+  25%,
+  43% {
+    transform: translate3d(100%, 0, 0);
+  }
+  50%,
+  68% {
+    transform: translate3d(200%, 0, 0);
+  }
+  75%,
+  93% {
+    transform: translate3d(300%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.8s ease-out both;
 }
@@ -114,6 +178,84 @@ html {
 .animate-hero-drift {
   animation: hero-drift 16s ease-in-out infinite;
   background-size: 100% 120%;
+}
+
+.trusted-logo-stage {
+  position: relative;
+}
+
+.trusted-logo-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgb(0 0 0 / 0.38),
+    transparent 14%,
+    transparent 86%,
+    rgb(0 0 0 / 0.38)
+  );
+}
+
+.trusted-logo-stage::after {
+  content: "";
+  position: absolute;
+  inset-block: 0.5rem;
+  left: 0;
+  z-index: 1;
+  width: 25%;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 0.375rem;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(255 255 255 / 0.18), transparent 55%),
+    rgb(255 255 255 / 0.055);
+  box-shadow: 0 0 28px rgb(255 255 255 / 0.08);
+  animation: trusted-marker 4.6s ease-in-out infinite;
+}
+
+.trusted-logo-stage:hover .trusted-logo-item {
+  animation-play-state: paused;
+}
+
+.trusted-logo-stage:hover .trusted-logo {
+  animation-play-state: paused;
+}
+
+.trusted-logo-stage:hover::after {
+  animation-play-state: paused;
+}
+
+.trusted-logo-item {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  animation: trusted-focus 4.6s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+.trusted-logo-item::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 38%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.34),
+    transparent
+  );
+  animation: trusted-sweep 4.6s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+.trusted-logo {
+  animation: trusted-logo-focus 4.6s ease-in-out infinite;
+  animation-delay: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {

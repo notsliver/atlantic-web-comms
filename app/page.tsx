@@ -14,17 +14,77 @@ const games = [
     name: "Catch A Fade 2",
     thumbnail: "/CatchAFade2T.png",
     href: "https://www.roblox.com/games/103820982596314/Catch-A-Fade-2-SHOES#!/about",
-    visits: "7.7M+ visits",
+    universeId: 10195887022,
+    fallbackPlayers: "4K+",
+    fallbackVisits: "8.9M+",
+    cta: "Jump Into the Fight",
   },
   {
     name: "Expedition Cave Dive",
     thumbnail: "/ExpeditionCaveDiveT.png",
     href: "https://www.roblox.com/games/77747054101308/Expedition-Cave-Dive",
-    visits: "1.3M+ visits",
+    universeId: 7677035096,
+    fallbackPlayers: "200+",
+    fallbackVisits: "1.4M+",
+    cta: "Dive In",
   },
 ];
 
-export default function Home() {
+const specializations = [
+  "LiveOps",
+  "Scaling Games",
+  "Making Games",
+  "Producing Games",
+  "Boosting Games Analytics",
+  "Marketing Games",
+  "Designing Games",
+  "Monetization & Economy",
+];
+
+type RobloxGame = {
+  id: number;
+  playing: number;
+  visits: number;
+};
+
+async function getRobloxStats() {
+  try {
+    const universeIds = games.map((game) => game.universeId).join(",");
+    const response = await fetch(
+      `https://games.roblox.com/v1/games?universeIds=${universeIds}`,
+      {
+        next: { revalidate: 60 },
+      },
+    );
+
+    if (!response.ok) {
+      return new Map<number, RobloxGame>();
+    }
+
+    const payload = (await response.json()) as { data?: RobloxGame[] };
+
+    return new Map(
+      (payload.data ?? []).map((game) => [game.id, game] as const),
+    );
+  } catch {
+    return new Map<number, RobloxGame>();
+  }
+}
+
+function formatStat(value: number | undefined, fallback: string) {
+  if (typeof value !== "number") {
+    return fallback;
+  }
+
+  return new Intl.NumberFormat("en", {
+    notation: "compact",
+    maximumFractionDigits: value >= 1_000_000 ? 1 : 0,
+  }).format(value);
+}
+
+export default async function Home() {
+  const robloxStats = await getRobloxStats();
+
   return (
     <div className="bg-black text-white">
       <section className="relative min-h-screen overflow-hidden">
@@ -114,22 +174,31 @@ export default function Home() {
                 </Link>
               </div>
               <div
-                className="animate-fade-up mt-10"
+                className="animate-fade-up mt-8 max-w-2xl"
                 style={{ animationDelay: "0.54s" }}
               >
                 <p className="text-xs font-medium text-white/45">Trusted by</p>
-                <div className="mt-4 flex max-w-3xl flex-wrap items-center gap-x-8 gap-y-5">
-                  {showcaseLogos.map((logo, index) => (
-                    <Image
-                      key={logo}
-                      src={logo}
-                      alt={`Trusted partner ${index + 1}`}
-                      width={132}
-                      height={64}
-                      className="animate-fade-up max-h-11 w-auto max-w-24 object-contain opacity-100 grayscale contrast-150 brightness-125 mix-blend-screen transition duration-300 hover:scale-105 hover:brightness-150"
-                      style={{ animationDelay: `${0.62 + index * 0.08}s` }}
-                    />
-                  ))}
+                <div className="trusted-logo-stage animate-fade-up mt-3 overflow-hidden border-y border-white/10 py-2">
+                  <div className="grid grid-cols-4 items-center gap-2">
+                    {showcaseLogos.map((logo, index) => (
+                      <div
+                        key={logo}
+                        className="trusted-logo-item flex h-9 items-center justify-center px-2 sm:h-10"
+                        style={{
+                          animationDelay: `${index * 1.15}s`,
+                        }}
+                      >
+                        <Image
+                          src={logo}
+                          alt={`Trusted partner ${index + 1}`}
+                          width={132}
+                          height={64}
+                          className="trusted-logo max-h-7 w-auto max-w-18 object-contain opacity-70 grayscale contrast-125 brightness-125 mix-blend-screen transition duration-300 sm:max-h-8 sm:max-w-20"
+                          sizes="80px"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,6 +207,35 @@ export default function Home() {
       </section>
 
       <main>
+        <section className="border-t border-white/10 bg-black px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+              <div>
+                <p className="animate-fade-up text-sm font-medium text-white/45">
+                  Specialize in
+                </p>
+                <h2
+                  className="animate-fade-up mt-3 max-w-xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl"
+                  style={{ animationDelay: "0.08s" }}
+                >
+                  End-to-end game growth.
+                </h2>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {specializations.map((specialization, index) => (
+                  <div
+                    key={specialization}
+                    className="animate-fade-up rounded-lg border border-white/10 bg-white/[0.035] px-4 py-3 text-sm font-medium text-white/82"
+                    style={{ animationDelay: `${0.12 + index * 0.04}s` }}
+                  >
+                    {specialization}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section
           id="games"
           className="scroll-mt-6 border-t border-white/10 bg-[#050505] px-6 py-20 sm:px-8 lg:px-12 lg:py-24"
@@ -146,11 +244,11 @@ export default function Home() {
             <div className="max-w-3xl">
               <p className="animate-fade-up text-sm font-medium text-white/45">Our Games</p>
               <h2 className="animate-fade-up mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl" style={{ animationDelay: "0.08s" }}>
-                Games we helped build.
+                Games we have scaled, partnered with, owned, and more.
               </h2>
               <p className="animate-fade-up mt-5 max-w-2xl text-base leading-7 text-white/62" style={{ animationDelay: "0.16s" }}>
-                These projects were created with partner studios, with our team
-                contributing engineering, QA, LiveOps, and production support.
+                These are games we have scaled, partnered with, owned, and
+                supported through engineering, QA, LiveOps, and production.
               </p>
             </div>
 
@@ -171,22 +269,47 @@ export default function Home() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
-                      <div>
+                      <div className="min-w-0">
                         <h3 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                           {game.name}
                         </h3>
-                        <p className="mt-2 text-sm font-medium text-white/65">
-                          {game.visits}
-                        </p>
+                        <div className="mt-4 grid max-w-sm grid-cols-2 overflow-hidden rounded-md border border-white/14 bg-black/45 shadow-[0_18px_44px_rgba(0,0,0,0.32)] backdrop-blur-md">
+                          <div className="px-3.5 py-3">
+                            <p className="flex items-center gap-2 text-[0.63rem] font-semiboldtext-white/45">
+                              Active Players
+                            </p>
+                            <p className="mt-1 text-lg font-semibold leading-none text-white sm:text-xl">
+                              {formatStat(
+                                robloxStats.get(game.universeId)?.playing,
+                                game.fallbackPlayers,
+                              )}
+                            </p>
+                          </div>
+                          <div className="border-l border-white/12 px-3.5 py-3">
+                            <p className="text-[0.63rem] font-semibold text-white/45">
+                              Live Visits
+                            </p>
+                            <p className="mt-1 text-lg font-semibold leading-none text-white/90 sm:text-xl">
+                              {formatStat(
+                                robloxStats.get(game.universeId)?.visits,
+                                game.fallbackVisits,
+                              )}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                       <a
                         href={game.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex shrink-0 items-center gap-2 rounded-md border border-white/24 bg-white/12 px-5 py-3 text-sm font-medium text-white backdrop-blur-md transition hover:border-white/45 hover:bg-white/18"
+                        className="group/cta inline-flex shrink-0 items-center gap-2 rounded-md border border-white/30 bg-white/14 px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_34px_rgba(0,0,0,0.34)] backdrop-blur-md transition duration-300 hover:border-white/55 hover:bg-white/22 hover:translate-y-[-1px]"
                       >
-                        <span>
-                          Play Game
+                        <span>{game.cta}</span>
+                        <span
+                          aria-hidden="true"
+                          className="transition duration-300 group-hover/cta:translate-x-1"
+                        >
+                          -&gt;
                         </span>
                       </a>
                     </div>

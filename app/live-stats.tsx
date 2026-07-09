@@ -9,7 +9,7 @@ type LiveStatsProps = {
 
 type MetricKey = keyof Pick<
   StudioStats,
-  "activePlayers" | "totalVisits" | "activeGames" | "peakCcu" | "gameCount"
+  "activePlayers" | "totalVisits" | "activeGames" | "gameCount"
 >;
 
 const metricLabels: Array<{
@@ -27,10 +27,6 @@ const metricLabels: Array<{
   {
     key: "activeGames",
     label: "Live Games",
-  },
-  {
-    key: "peakCcu",
-    label: "Peak CCU",
   },
 ];
 
@@ -81,7 +77,7 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
 
     const timer = window.setInterval(() => {
       void loadStats();
-    }, 30000);
+    }, 10000);
 
     return () => {
       active = false;
@@ -103,12 +99,12 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/38">
         <span className="inline-flex items-center gap-2 font-medium text-white/62">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_16px_rgba(110,231,183,0.72)]" />
-          Live portfolio analytics
+          Live game analytics
         </span>
         <span>{refreshing ? "Updating" : `Updated ${lastUpdated}`}</span>
       </div>
 
-      <div className="grid border-y border-white/12 sm:grid-cols-4">
+      <div className="grid border-y border-white/12 sm:grid-cols-3">
         {metrics.map((metric, index) => (
           <StatCard
             key={metric.label}
@@ -140,7 +136,7 @@ function StatCard({
       }`}
     >
       <p className="text-2xl font-semibold text-white tabular-nums sm:text-3xl">
-        {formatCompact(animatedValue)}
+        {formatCount(animatedValue)}
       </p>
       <p className="mt-1 text-xs font-medium text-white/42">{label}</p>
     </article>
@@ -186,9 +182,8 @@ function useAnimatedNumber(target: number) {
   return value;
 }
 
-function formatCompact(value: number) {
+function formatCount(value: number) {
   return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: value >= 1_000_000 ? 1 : 0,
+    maximumFractionDigits: 0,
   }).format(Math.round(value));
 }

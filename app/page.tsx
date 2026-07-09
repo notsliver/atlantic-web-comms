@@ -19,10 +19,9 @@ const showcaseLogos = [
   "/showcase4.png",
 ];
 
-function formatCompactNumber(value: number) {
+function formatCount(value: number) {
   return new Intl.NumberFormat("en", {
-    notation: "compact",
-    maximumFractionDigits: value >= 1_000_000 ? 1 : 0,
+    maximumFractionDigits: 0,
   }).format(value);
 }
 
@@ -114,7 +113,7 @@ export default async function Home() {
                 className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/38 hover:bg-white/8"
                 style={{ animationDelay: "0.34s" }}
               >
-                View live portfolio
+                View experiences
               </Link>
             </div>
 
@@ -158,9 +157,11 @@ export default async function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
               <div className="max-w-3xl">
-                <p className="text-sm font-medium text-white/42">Portfolio</p>
+                <p className="text-sm font-medium text-white/42">
+                  Experiences
+                </p>
                 <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">
-                  Live Roblox experiences, built for repeat play.
+                  Roblox experiences, built for repeat play.
                 </h2>
               </div>
               <p className="max-w-md text-base leading-7 text-white/58">
@@ -193,7 +194,7 @@ export default async function Home() {
                           <div className="mt-4 flex flex-wrap gap-5 text-sm">
                             <span>
                               <strong className="font-semibold text-white">
-                                {formatCompactNumber(
+                                {formatCount(
                                   initialStats.games[index]?.playing ??
                                     game.fallbackPlayers,
                                 )}
@@ -202,7 +203,7 @@ export default async function Home() {
                             </span>
                             <span>
                               <strong className="font-semibold text-white">
-                                {formatCompactNumber(
+                                {formatCount(
                                   initialStats.games[index]?.visits ??
                                     game.fallbackVisits,
                                 )}

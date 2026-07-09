@@ -83,7 +83,6 @@ export const careerRoles = [
   "Builder",
   "Project Management",
   "Quality Assurance Tester",
-  "Lead",
 ] as const;
 
 export type RobloxGameStats = {
@@ -96,7 +95,6 @@ export type StudioStats = {
   activePlayers: number;
   totalVisits: number;
   activeGames: number;
-  peakCcu: number;
   gameCount: number;
   games: Array<{
     id: number;
@@ -111,7 +109,7 @@ export async function fetchRobloxGameStats() {
     const response = await fetch(
       `https://games.roblox.com/v1/games?universeIds=${universeIds}`,
       {
-        next: { revalidate: 30 },
+        next: { revalidate: 10 },
       },
     );
 
@@ -143,13 +141,11 @@ export function buildStudioStats(statsByGame: Map<number, RobloxGameStats>) {
   const activePlayers = games.reduce((sum, game) => sum + game.playing, 0);
   const totalVisits = games.reduce((sum, game) => sum + game.visits, 0);
   const activeGames = games.filter((game) => game.playing > 0).length;
-  const peakCcu = games.reduce((peak, game) => Math.max(peak, game.playing), 0);
 
   return {
     activePlayers,
     totalVisits,
     activeGames,
-    peakCcu,
     gameCount: studioGames.length,
     games,
   } satisfies StudioStats;

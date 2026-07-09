@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Atlantic",
-  description: "From engineering and QA to LiveOps and strategic partnerships, we help game studios build better experiences and scale long-term.",
+  title: "Atlantic Interactive",
+  description:
+    "We build the games players love, empowering Roblox studios with production, marketing, LiveOps, analytics, and strategy.",
   icons: {
     icon: "/icon.png",
   },

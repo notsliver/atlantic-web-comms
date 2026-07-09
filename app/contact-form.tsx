@@ -184,6 +184,8 @@ export function ContactForm() {
             }`}
             aria-live="polite"
           >
+            {message ||
+              "Tell us about the project, your timeline, and what kind of help you need."}
           </p>
           <button
             type="submit"

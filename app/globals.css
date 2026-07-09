@@ -83,6 +83,25 @@ html {
   }
 }
 
+@keyframes intro-logo-breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0) scale(1.035);
+  }
+}
+
+@keyframes intro-progress-fill {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.8s ease-out both;
 }
@@ -121,6 +140,15 @@ html {
 
 .studio-network-marquee:hover .studio-network-track {
   animation-play-state: paused;
+}
+
+.intro-logo-mark {
+  animation: intro-logo-breathe 1.7s ease-in-out infinite;
+}
+
+.intro-progress {
+  transform-origin: left center;
+  animation: intro-progress-fill 3.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {

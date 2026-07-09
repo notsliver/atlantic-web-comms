@@ -30,7 +30,7 @@ export function IntroSequence() {
 
     const dismissTimer = window.setTimeout(() => {
       setPhase((current) => (current === "visible" ? "exiting" : current));
-    }, 2800);
+    }, 3600);
 
     return () => {
       window.clearTimeout(showTimer);
@@ -51,7 +51,7 @@ export function IntroSequence() {
       }
 
       setPhase("hidden");
-    }, 650);
+    }, 520);
 
     return () => {
       window.clearTimeout(timeout);
@@ -71,38 +71,38 @@ export function IntroSequence() {
       aria-label="Atlantic Interactive intro"
       onClick={() => setPhase("exiting")}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent_36%),linear-gradient(120deg,rgba(255,255,255,0.05),transparent_48%)]" />
+      <Image
+        src="/background.png"
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        sizes="100vw"
+        className="animate-hero-zoom object-cover opacity-80"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.58)_43%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.16)_55%,rgba(5,5,5,0.86)_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
-      <div className="relative flex w-full max-w-3xl flex-col items-center text-center">
-        <div className="relative mb-8">
-          <div className="relative flex h-24 w-24 items-center justify-center border border-white/14 bg-white/[0.04] backdrop-blur-md">
-            <Image
-              src="/image.png"
-              alt="Atlantic logo"
-              width={58}
-              height={58}
-              priority
-              className="h-14 w-14 object-contain"
-            />
-          </div>
+      <div className="relative flex w-full max-w-xs flex-col items-center">
+        <div className="intro-logo-mark flex h-28 w-28 items-center justify-center">
+          <Image
+            src="/image.png"
+            alt="Atlantic logo"
+            width={92}
+            height={92}
+            priority
+            className="h-[5.75rem] w-[5.75rem] object-contain"
+          />
         </div>
 
-        <h1 className="max-w-2xl text-4xl font-semibold leading-[1.04] text-balance sm:text-6xl">
-          Atlantic Interactive
-        </h1>
-        <p className="mt-5 max-w-xl text-base leading-7 text-white/62 sm:text-lg">
-          Games players love. Teams built to scale.
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md border border-white/24 bg-white/12 px-5 py-3 text-sm font-medium text-white transition hover:border-white/45 hover:bg-white/18"
-            onClick={() => setPhase("exiting")}
-          >
-            Enter studio
-          </button>
+        <div
+          className="mt-8 h-2 w-full overflow-hidden rounded-full border border-white/12 bg-white/[0.045]"
+          role="progressbar"
+          aria-label="Loading Atlantic Interactive"
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <div className="intro-progress h-full rounded-full bg-white" />
         </div>
       </div>
     </div>

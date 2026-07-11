@@ -40,14 +40,31 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   }, []);
 
   function handleBrandClick(event: MouseEvent<HTMLAnchorElement>) {
-    if (!window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
-    event.preventDefault();
+    const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const scrollToTop = () => {
+      if (window.atlanticScrollToTop) window.atlanticScrollToTop();
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    if (isIsland) {
+      event.preventDefault();
+      if (!isTouch) {
+        scrollToTop();
+        return;
+      }
+    } else if (!isTouch) {
+      return;
+    } else {
+      event.preventDefault();
+    }
+
     setBrandSpinning(false);
     window.requestAnimationFrame(() => setBrandSpinning(true));
     if (brandTimer.current) window.clearTimeout(brandTimer.current);
     brandTimer.current = window.setTimeout(() => {
       setBrandSpinning(false);
-      router.push("/");
+      if (isIsland) scrollToTop();
+      else router.push("/");
     }, 650);
   }
 

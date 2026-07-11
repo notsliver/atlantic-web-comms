@@ -3,6 +3,12 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+declare global {
+  interface Window {
+    atlanticScrollToTop?: () => void;
+  }
+}
+
 export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -35,9 +41,14 @@ export function SmoothScroll() {
     };
 
     document.addEventListener("click", handleAnchorClick);
+    window.atlanticScrollToTop = () => lenis.scrollTo(0, {
+      duration: 1.25,
+      easing: (value) => 1 - Math.pow(1 - value, 4),
+    });
 
     return () => {
       document.removeEventListener("click", handleAnchorClick);
+      delete window.atlanticScrollToTop;
       lenis.destroy();
     };
   }, []);

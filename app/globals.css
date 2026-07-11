@@ -24,6 +24,23 @@ body.intro-pending {
   touch-action: none;
 }
 
+.mobile-menu-button { position: relative; z-index: 70; display: flex; width: 42px; height: 42px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255,255,255,.14); border-radius: .5rem; background: rgba(0,0,0,.3); backdrop-filter: blur(12px); }
+.mobile-menu-button span { display: block; height: 1px; background: rgba(255,255,255,.82); transition: transform .4s cubic-bezier(.22,1,.36,1), width .35s ease, opacity .25s ease; }
+.mobile-menu-button span:nth-child(1) { width: 18px; }
+.mobile-menu-button span:nth-child(2) { width: 13px; margin-left: 5px; }
+.mobile-menu-button span:nth-child(3) { width: 18px; }
+.mobile-menu-button.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.mobile-menu-button.is-open span:nth-child(2) { width: 0; opacity: 0; }
+.mobile-menu-button.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.mobile-menu { position: fixed; z-index: 60; inset: 0; visibility: hidden; overflow: hidden; background: rgba(4,4,4,.98); opacity: 0; clip-path: circle(0 at calc(100% - 47px) 42px); transition: clip-path .7s cubic-bezier(.77,0,.18,1), opacity .25s ease, visibility .7s; }
+.mobile-menu.is-open { visibility: visible; opacity: 1; clip-path: circle(150% at calc(100% - 47px) 42px); }
+.mobile-menu-atmosphere { position: absolute; inset: 0; background: linear-gradient(145deg, transparent 30%, rgba(255,255,255,.035), transparent 72%); }
+.mobile-menu li { opacity: 0; transform: translateY(18px); transition: opacity .4s ease, transform .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--menu-index) * 55ms); }
+.mobile-menu.is-open li { opacity: 1; transform: translateY(0); transition-delay: calc(180ms + var(--menu-index) * 65ms); }
+.mobile-menu-link { display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid rgba(255,255,255,.08); padding: .9rem 0; font-size: 1.55rem; font-weight: 600; color: rgba(255,255,255,.78); transition: color .25s ease, padding-left .25s ease; }
+.mobile-menu-link:active, .mobile-menu-link:focus-visible { color: white; padding-left: .4rem; outline: none; }
+
 body::before {
   content: "";
   position: fixed;

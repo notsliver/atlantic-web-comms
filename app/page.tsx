@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContactForm } from "./contact-form";
 import { IntroSequence } from "./intro-sequence";
 import { LiveStats } from "./live-stats";
+import { MobileNav } from "./mobile-nav";
 import {
   aboutServices,
   buildStudioStats,
@@ -84,6 +85,7 @@ export default async function Home() {
                 ))}
               </ul>
             </nav>
+            <MobileNav />
           </div>
         </header>
 

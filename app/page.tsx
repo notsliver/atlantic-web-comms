@@ -91,21 +91,15 @@ export default async function Home() {
             <p className="text-xs font-medium uppercase text-white/36">
               Studio network
             </p>
-            <div className="flex-1 overflow-hidden sm:max-w-2xl">
-              <div className="flex items-center justify-between gap-4 sm:gap-10">
-                {showcaseLogos.map((logo, index) => (
-                  <div
-                    key={`${logo}-${index}`}
-                    className="flex h-12 w-32 shrink-0 items-center justify-center"
-                  >
-                    <Image
-                      src={logo}
-                      alt={`Studio partner ${(index % showcaseLogos.length) + 1}`}
-                      width={132}
-                      height={64}
-                      className="max-h-9 w-auto object-contain opacity-[0.58] grayscale contrast-125 brightness-125 transition duration-300 hover:opacity-90"
-                      sizes="132px"
-                    />
+            <div className="studio-network-marquee flex-1 overflow-hidden sm:max-w-2xl">
+              <div className="studio-network-track flex w-[200%]">
+                {[0, 1].map((group) => (
+                  <div key={group} className="flex w-1/2 shrink-0 items-center">
+                    {showcaseLogos.map((logo, index) => (
+                      <div key={`${group}-${logo}`} className="flex h-12 w-1/3 shrink-0 items-center justify-center px-2 sm:px-5">
+                        <Image src={logo} alt={`Studio partner ${index + 1}`} width={132} height={64} className="max-h-9 max-w-full object-contain opacity-[0.58] grayscale contrast-125 brightness-125 transition duration-300 hover:opacity-90" sizes="132px" />
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>

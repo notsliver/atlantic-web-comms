@@ -212,6 +212,15 @@ html {
   }
 }
 
+@keyframes studio-network-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.studio-network-marquee { mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent); }
+.studio-network-track { animation: studio-network-drift 18s linear infinite; will-change: transform; }
+.studio-network-marquee:hover .studio-network-track { animation-play-state: paused; }
+
 @keyframes intro-logo-breathe {
   0%, 100% {
     opacity: .62;

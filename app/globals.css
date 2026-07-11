@@ -42,6 +42,18 @@ body::before {
   }
 }
 
+.game-showcase {
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .22);
+  transition: border-color .5s ease, transform .5s ease, box-shadow .5s ease;
+}
+
+.game-showcase:hover {
+  border-color: rgba(255, 255, 255, .22);
+  transform: translateY(-4px);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .42);
+}
+
+
 
 
 html {

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { MobileNav } from "./mobile-nav";
 
 const links = [
@@ -16,6 +17,9 @@ const links = [
 
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const [isIsland, setIsIsland] = useState(false);
+  const [brandSpinning, setBrandSpinning] = useState(false);
+  const brandTimer = useRef<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     let frame = 0;
@@ -31,10 +35,26 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
     };
   }, []);
 
+  useEffect(() => () => {
+    if (brandTimer.current) window.clearTimeout(brandTimer.current);
+  }, []);
+
+  function handleBrandClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+    event.preventDefault();
+    setBrandSpinning(false);
+    window.requestAnimationFrame(() => setBrandSpinning(true));
+    if (brandTimer.current) window.clearTimeout(brandTimer.current);
+    brandTimer.current = window.setTimeout(() => {
+      setBrandSpinning(false);
+      router.push("/");
+    }, 650);
+  }
+
   return (
     <header className={`site-header ${isIsland ? "is-island" : ""} ${overlay ? "absolute" : "relative border-b border-white/10 bg-[#050505]"} inset-x-0 top-0 z-50`}>
       <div className="site-header-inner mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-12">
-        <Link href="/" className="site-brand flex items-center gap-3 text-white transition hover:opacity-80">
+        <Link href="/" onClick={handleBrandClick} className={`site-brand flex items-center gap-3 text-white transition hover:opacity-80 ${brandSpinning ? "is-spinning" : ""}`}>
           <Image src="/image.png" alt="Atlantic Interactive logo" width={38} height={38} priority className="site-brand-logo h-9 w-9 object-contain" />
           <span className="text-xs font-semibold uppercase sm:text-sm">Atlantic Interactive</span>
         </Link>

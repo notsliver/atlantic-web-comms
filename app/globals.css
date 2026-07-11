@@ -60,6 +60,7 @@ body.intro-pending {
 .site-brand-logo { transform-origin: center; will-change: transform; }
 .site-brand:hover .site-brand-logo,
 .site-brand:focus-visible .site-brand-logo { animation: brand-orbit 1s cubic-bezier(.4,0,.2,1) both; }
+.site-brand.is-spinning .site-brand-logo { animation: brand-orbit .65s cubic-bezier(.4,0,.2,1) both; }
 @keyframes brand-orbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 .site-header-inner { transition: max-width .55s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), background-color .4s ease, border-color .4s ease, border-radius .45s ease, box-shadow .45s ease; }
 .site-header.is-island { position: fixed !important; top: .75rem; padding-inline: .75rem; border: 0; background: transparent; }
@@ -201,15 +202,6 @@ html {
   }
 }
 
-@keyframes studio-network-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
 @keyframes intro-logo-breathe {
   0%, 100% {
     opacity: .62;
@@ -252,24 +244,6 @@ html {
 .animate-hero-drift {
   animation: hero-drift 16s ease-in-out infinite;
   background-size: 100% 120%;
-}
-
-.studio-network-marquee {
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
-  );
-}
-
-.studio-network-track {
-  animation: studio-network-drift 22s linear infinite;
-}
-
-.studio-network-marquee:hover .studio-network-track {
-  animation-play-state: paused;
 }
 
 .intro-logo-mark {

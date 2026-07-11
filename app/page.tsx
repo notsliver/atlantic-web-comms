@@ -90,9 +90,9 @@ export default async function Home() {
             <p className="text-xs font-medium uppercase text-white/36">
               Studio network
             </p>
-            <div className="studio-network-marquee flex-1 overflow-hidden sm:max-w-2xl">
-              <div className="studio-network-track flex w-max items-center gap-10 pr-10">
-                {[...showcaseLogos, ...showcaseLogos].map((logo, index) => (
+            <div className="flex-1 overflow-hidden sm:max-w-2xl">
+              <div className="flex items-center justify-between gap-4 sm:gap-10">
+                {showcaseLogos.map((logo, index) => (
                   <div
                     key={`${logo}-${index}`}
                     className="flex h-12 w-32 shrink-0 items-center justify-center"

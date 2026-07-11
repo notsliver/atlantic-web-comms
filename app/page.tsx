@@ -179,21 +179,21 @@ export default async function Home() {
                   className="game-showcase group overflow-hidden rounded-xl border border-white/10 bg-[#090909]"
                 >
                   <div className={`grid lg:grid-cols-[1.35fr_.65fr] ${index % 2 ? "lg:grid-cols-[.65fr_1.35fr]" : ""}`}>
-                    <div className={`relative min-h-[280px] overflow-hidden lg:min-h-[420px] ${index % 2 ? "lg:order-2" : ""}`}>
-                      <Image src={game.thumbnail} alt={`${game.name} thumbnail`} fill sizes="(min-width: 1024px) 65vw, 100vw" className="object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.045]" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+                    <div className={`game-showcase-art relative min-h-[280px] overflow-hidden lg:min-h-[420px] ${index % 2 ? "lg:order-2" : ""}`}>
+                      <Image src={game.thumbnail} alt={`${game.name} thumbnail`} fill sizes="(min-width: 1024px) 65vw, 100vw" className="game-showcase-image object-cover" />
+                      <div className="game-showcase-overlay absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
                     </div>
-                    <div className={`flex flex-col justify-between p-6 sm:p-9 ${index % 2 ? "lg:order-1" : ""}`}>
+                    <div className={`game-showcase-panel relative flex flex-col justify-between p-6 sm:p-9 ${index % 2 ? "lg:order-1" : ""}`}>
                       <div>
-                        <h3 className="text-2xl font-semibold leading-tight text-white sm:text-3xl">{game.name}</h3>
-                        <p className="mt-4 text-sm leading-7 text-white/52">A live Atlantic experience shaped around memorable sessions, competitive energy, and reasons to return.</p>
+                        <h3 className="game-showcase-title text-2xl font-semibold leading-tight text-white sm:text-3xl">{game.name}</h3>
+                        <p className="game-showcase-copy mt-4 text-sm leading-7 text-white/52">A live Atlantic experience shaped around memorable sessions, competitive energy, and reasons to return.</p>
                       </div>
                       <div className="mt-10">
-                        <div className="grid grid-cols-2 border-y border-white/10 py-4">
-                          <div><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.playing ?? game.fallbackPlayers)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Active players</span></div>
-                          <div className="border-l border-white/10 pl-5"><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.visits ?? game.fallbackVisits)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Total visits</span></div>
+                        <div className="game-showcase-stats grid grid-cols-2 border-y border-white/10 py-4">
+                          <div className="game-showcase-stat"><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.playing ?? game.fallbackPlayers)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Active players</span></div>
+                          <div className="game-showcase-stat border-l border-white/10 pl-5"><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.visits ?? game.fallbackVisits)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Total visits</span></div>
                         </div>
-                        <a href={game.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 w-full items-center justify-between rounded-md border border-white/18 bg-white/[0.05] px-4 text-sm font-semibold transition hover:border-white/35 hover:bg-white/[0.09]">{game.cta}<span aria-hidden="true" className="transition duration-300 group-hover:translate-x-1">↗</span></a>
+                        <a href={game.href} target="_blank" rel="noreferrer" className="game-showcase-cta mt-5 inline-flex min-h-11 w-full items-center justify-between rounded-md border border-white/18 bg-white/[0.05] px-4 text-sm font-semibold text-white"><span>{game.cta}</span><span aria-hidden="true">↗</span></a>
                       </div>
                     </div>
                   </div>

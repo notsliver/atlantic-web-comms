@@ -16,7 +16,6 @@ const showcaseLogos = [
   "/showcase1.png",
   "/showcase2.png",
   "/showcase3.png",
-  "/showcase4.png",
 ];
 
 function formatCount(value: number) {
@@ -30,7 +29,7 @@ export default async function Home() {
   const featuredGames = studioGames
     .map((game, index) => ({ game, liveStats: initialStats.games[index] }))
     .sort((a, b) => (b.liveStats?.playing ?? b.game.fallbackPlayers) - (a.liveStats?.playing ?? a.game.fallbackPlayers))
-    .slice(0, 2);
+    .slice(0, 3);
 
   return (
     <div className="bg-[#050505] text-white">
@@ -176,7 +175,7 @@ export default async function Home() {
         >
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="text-sm font-medium text-white/42">Studio</p>
+              <p className="text-sm font-medium text-white/42">About us</p>
               <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">
                 A production partner for ambitious Roblox teams.
               </h2>

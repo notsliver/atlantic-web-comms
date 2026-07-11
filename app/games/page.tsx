@@ -2,7 +2,12 @@ import Image from "next/image";
 import { buildStudioStats, fetchRobloxGameStats, studioGames } from "@/lib/atlantic";
 import { SiteHeader } from "../site-header";
 
-function formatCount(value: number) { return new Intl.NumberFormat("en").format(value); }
+function formatCount(value: number) {
+  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1).replace(".0", "")}B+`;
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(".0", "")}M+`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1).replace(".0", "")}K+`;
+  return new Intl.NumberFormat("en").format(value);
+}
 
 export default async function GamesPage() {
   const stats = buildStudioStats(await fetchRobloxGameStats());

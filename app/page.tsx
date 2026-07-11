@@ -19,9 +19,10 @@ const showcaseLogos = [
 ];
 
 function formatCount(value: number) {
-  return new Intl.NumberFormat("en", {
-    maximumFractionDigits: 0,
-  }).format(value);
+  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1).replace(".0", "")}B+`;
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(".0", "")}M+`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1).replace(".0", "")}K+`;
+  return new Intl.NumberFormat("en").format(value);
 }
 
 export default async function Home() {

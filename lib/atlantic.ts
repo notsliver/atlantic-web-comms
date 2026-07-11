@@ -26,7 +26,7 @@ export const studioGames = [
     fallbackVisits: 68_300_000,
     cta: "Enter the Duel",
   },
-    {
+  {
     name: "Cut Grass for Anime Characters",
     thumbnail: "/CutGrassforanimecharactersT.jpg",
     href: "https://www.roblox.com/games/137422980844414/Cut-Grass-for-Anime-Characters",
@@ -35,6 +35,16 @@ export const studioGames = [
     fallbackVisits: 0,
     cta: "Start Cutting",
   },
+  {
+    name: "Snatch a Seed",
+    thumbnail: "/SnatchaSeedT.png",
+    href: "https://www.roblox.com/games/121180020176396/Snatch-a-Seed",
+    universeId: 8125244608,
+    fallbackPlayers: 0,
+    fallbackVisits: 9_200_000,
+    cta: "Play Snatch a Seed",
+  },
+
 ] as const;
 
 export const aboutServices = [

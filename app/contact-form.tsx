@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { careerRoles } from "@/lib/atlantic";
 
 const inquiryTypes = [
   "Partnership",
@@ -17,6 +18,7 @@ export function ContactForm() {
   const [message, setMessage] = useState("");
   const [requestType, setRequestType] = useState("");
   const [typeMenuOpen, setTypeMenuOpen] = useState(false);
+  const isCareer = requestType === "Careers";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,11 +80,11 @@ export function ContactForm() {
             required
             type="email"
           />
-          <Field
-            label="Company / Studio"
-            name="company"
-            placeholder="Studio name"
-          />
+          {isCareer ? (
+            <SelectField label="Role" name="role" options={careerRoles} required />
+          ) : (
+            <Field label="Company / Studio" name="company" placeholder="Studio name" />
+          )}
           <div
             className="relative block border-t border-white/10 p-4 sm:border-l"
             onBlur={(event) => {
@@ -147,28 +149,30 @@ export function ContactForm() {
               ) : null}
             </div>
           </div>
-          <Field
-            label="Project / Game Link"
-            name="projectLink"
-            placeholder="https://..."
-            type="url"
-          />
-          <Field
-            label="Timeline"
-            name="timeline"
-            placeholder="Deadline or ideal start"
-          />
+          {isCareer ? (
+            <>
+              <Field label="Timezone" name="timezone" placeholder="e.g. UTC−5 / EST" required />
+              <Field label="Portfolio / Past Work" name="portfolio" placeholder="https://..." type="url" required />
+              <Field label="Showreel / Showcase Video" name="showreel" placeholder="YouTube, Vimeo, Drive…" type="url" />
+              <Field label="Availability" name="availability" placeholder="Hours per week / start date" required />
+            </>
+          ) : (
+            <>
+              <Field label="Project / Game Link" name="projectLink" placeholder="https://..." type="url" />
+              <Field label="Timeline" name="timeline" placeholder="Deadline or ideal start" />
+            </>
+          )}
         </div>
 
         <label className="block p-4">
           <span className="text-xs font-medium text-white/45">
-            Request details
+            {isCareer ? "Experience and best work" : "Request details"}
           </span>
           <textarea
             name="details"
             required
             rows={6}
-            placeholder="What are you building, what do you need help with, and what should we know before replying?"
+            placeholder={isCareer ? "Tell us about your experience, your contribution to your best work, and why you want to join Atlantic." : "What are you building, what do you need help with, and what should we know before replying?"}
             className="mt-3 w-full resize-none bg-transparent text-sm leading-6 text-white outline-none placeholder:text-white/28"
           />
         </label>
@@ -197,6 +201,18 @@ export function ContactForm() {
         </div>
       </form>
     </div>
+  );
+}
+
+function SelectField({ label, name, options, required }: { label: string; name: string; options: readonly string[]; required?: boolean }) {
+  return (
+    <label className="block border-t border-white/10 p-4 even:sm:border-l sm:[&:nth-child(-n+2)]:border-t-0">
+      <span className="text-xs font-medium text-white/45">{label}</span>
+      <select name={name} required={required} defaultValue="" className="mt-2 h-9 w-full bg-transparent text-sm text-white outline-none">
+        <option value="" disabled className="bg-[#0b0b0b]">Choose a role</option>
+        {options.map((option) => <option key={option} className="bg-[#0b0b0b]">{option}</option>)}
+      </select>
+    </label>
   );
 }
 

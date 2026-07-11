@@ -18,7 +18,7 @@ const metricLabels: Array<{
 }> = [
   {
     key: "activePlayers",
-    label: "Players Online",
+    label: "Playing Now",
   },
   {
     key: "totalVisits",
@@ -32,15 +32,11 @@ const metricLabels: Array<{
 
 export function LiveStats({ initialStats }: LiveStatsProps) {
   const [stats, setStats] = useState(initialStats);
-  const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState("just now");
 
   useEffect(() => {
     let active = true;
 
     async function loadStats() {
-      setRefreshing(true);
-
       try {
         const response = await fetch("/api/stats", {
           cache: "no-store",
@@ -54,23 +50,8 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
 
         if (active) {
           setStats(nextStats);
-          setLastUpdated(
-            new Intl.DateTimeFormat("en", {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            }).format(new Date()),
-          );
         }
-      } catch {
-        if (active) {
-          setLastUpdated("live data unavailable");
-        }
-      } finally {
-        if (active) {
-          setRefreshing(false);
-        }
-      }
+      } catch {}
     }
 
     void loadStats();
@@ -101,7 +82,6 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_16px_rgba(110,231,183,0.72)]" />
           Live game analytics
         </span>
-        <span>{refreshing ? "Updating" : `Updated ${lastUpdated}`}</span>
       </div>
 
       <div className="grid border-y border-white/12 sm:grid-cols-3">
@@ -183,7 +163,9 @@ function useAnimatedNumber(target: number) {
 }
 
 function formatCount(value: number) {
-  return new Intl.NumberFormat("en", {
-    maximumFractionDigits: 0,
-  }).format(Math.round(value));
+  const rounded = Math.round(value);
+  if (rounded >= 1_000_000_000) return `${(rounded / 1_000_000_000).toFixed(1).replace(".0", "")}B+`;
+  if (rounded >= 1_000_000) return `${(rounded / 1_000_000).toFixed(1).replace(".0", "")}M+`;
+  if (rounded >= 1_000) return `${(rounded / 1_000).toFixed(1).replace(".0", "")}K+`;
+  return new Intl.NumberFormat("en").format(rounded);
 }

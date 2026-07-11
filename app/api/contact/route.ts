@@ -6,6 +6,11 @@ type ContactPayload = {
   projectLink?: unknown;
   timeline?: unknown;
   details?: unknown;
+  role?: unknown;
+  timezone?: unknown;
+  portfolio?: unknown;
+  showreel?: unknown;
+  availability?: unknown;
 };
 
 const DISCORD_FIELD_LIMIT = 1024;
@@ -36,12 +41,21 @@ export async function POST(request: Request) {
   const projectLink = clean(payload.projectLink);
   const timeline = clean(payload.timeline);
   const details = clean(payload.details);
+  const role = clean(payload.role);
+  const timezone = clean(payload.timezone);
+  const portfolio = clean(payload.portfolio);
+  const showreel = clean(payload.showreel);
+  const availability = clean(payload.availability);
 
   if (!name || !email || !type || !details) {
     return Response.json(
       { message: "Name, email, request type, and details are required." },
       { status: 400 },
     );
+  }
+
+  if (type === "Careers" && (!role || !timezone || !portfolio || !availability)) {
+    return Response.json({ message: "Role, timezone, portfolio, and availability are required for applications." }, { status: 400 });
   }
 
   if (!isEmail(email)) {
@@ -69,6 +83,13 @@ export async function POST(request: Request) {
             field("Company / Studio", company || "Not provided", true),
             field("Timeline", timeline || "Not provided", true),
             field("Project / Game Link", projectLink || "Not provided", false),
+            ...(type === "Careers" ? [
+              field("Role", role, true),
+              field("Timezone", timezone, true),
+              field("Availability", availability, true),
+              field("Portfolio / Past Work", portfolio, false),
+              field("Showreel / Showcase", showreel || "Not provided", false),
+            ] : []),
           ],
           timestamp: new Date().toISOString(),
         },

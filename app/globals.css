@@ -19,8 +19,34 @@ body {
   color-scheme: dark;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 18%,
+    rgba(34, 76, 104, 0.025) 42%,
+    rgba(255, 255, 255, 0.018) 58%,
+    transparent 82%
+  );
+  filter: blur(90px);
+  animation: ambient-shift 18s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-shift {
+  to {
+    transform: translate3d(1.5%, -1%, 0);
+  }
+}
+
+
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
 }
 
 @keyframes fade-up {

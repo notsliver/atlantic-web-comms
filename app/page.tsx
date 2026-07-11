@@ -32,7 +32,7 @@ export default async function Home() {
     <div className="bg-[#050505] text-white">
       <IntroSequence />
 
-      <section className="relative min-h-[92svh] overflow-hidden border-b border-white/10">
+      <section id="home" className="relative min-h-[92svh] overflow-hidden border-b border-white/10">
         <Image
           src="/background.png"
           alt=""
@@ -66,10 +66,12 @@ export default async function Home() {
             <nav aria-label="Primary" className="hidden md:block">
               <ul className="flex items-center gap-7 text-sm font-medium text-white/62">
                 {[
-                  ["Work", "#games"],
-                  ["Studio", "#about"],
+                  ["Home", "#home"],
+                  ["Our Games", "#games"],
+                  ["Services", "#services"],
+                  ["About", "#about"],
                   ["Careers", "#careers"],
-                  ["Contact", "#contact"],
+                  ["Get in touch", "#contact"],
                 ].map(([item, href]) => (
                   <li key={item}>
                     <Link
@@ -113,7 +115,7 @@ export default async function Home() {
                 className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/38 hover:bg-white/8"
                 style={{ animationDelay: "0.34s" }}
               >
-                View experiences
+                Explore Our Games
               </Link>
             </div>
 
@@ -230,7 +232,7 @@ export default async function Home() {
         </section>
 
         <section
-          id="about"
+          id="services"
           className="scroll-mt-6 border-b border-white/10 bg-[#080808] px-6 py-20 sm:px-8 lg:px-12 lg:py-24"
         >
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
@@ -242,10 +244,10 @@ export default async function Home() {
             </div>
             <div>
               <p className="max-w-2xl text-lg leading-8 text-white/66">
-                Atlantic Interactive helps creators build, launch, operate, and
-                grow exceptional experiences. We bring the structure, taste,
-                and data discipline needed to turn strong ideas into games
-                players remember.
+                From first prototype to the millionth session, we help bold
+                Roblox teams make games worth returning to. Atlantic combines
+                hands-on production, creative instinct, and live player insight
+                to build worlds that feel alive—and stay that way.
               </p>
 
               <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
@@ -265,7 +267,7 @@ export default async function Home() {
         </section>
 
         <section
-          id="brand"
+          id="about"
           className="scroll-mt-6 border-b border-white/10 px-6 py-20 sm:px-8 lg:px-12 lg:py-24"
         >
           <div className="mx-auto max-w-7xl">
@@ -317,25 +319,20 @@ export default async function Home() {
           id="careers"
           className="scroll-mt-6 border-b border-white/10 bg-[#080808] px-6 py-20 sm:px-8 lg:px-12 lg:py-24"
         >
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.86fr_1.14fr]">
+          <div className="mx-auto max-w-7xl">
             <div>
               <p className="text-sm font-medium text-white/42">Careers</p>
               <h2 className="mt-3 text-3xl font-semibold text-white sm:text-5xl">
-                Join the team behind the teams.
+                Make work millions of players remember.
               </h2>
               <p className="mt-5 max-w-xl text-base leading-7 text-white/60">
-                We are interested in sharp creators, operators, analysts, and
-                builders who care about quality and momentum.
+                Join a team where craft moves quickly, good ideas can come from
+                anywhere, and your work reaches real players. Choose the role
+                that fits, then show us what you can do.
               </p>
-              <Link
-                href="#contact"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 px-5 text-sm font-semibold text-white transition hover:border-white/38 hover:bg-white/8"
-              >
-                Apply through contact
-              </Link>
             </div>
 
-            <div className="flex flex-wrap content-start gap-2">
+            <div className="mt-8 flex flex-wrap content-start gap-2">
               {careerRoles.map((role) => (
                 <span
                   key={role}
@@ -345,6 +342,12 @@ export default async function Home() {
                 </span>
               ))}
             </div>
+            <Link
+              href="#contact"
+              className="mt-8 inline-flex min-h-12 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-black transition hover:bg-white/84"
+            >
+              Apply through our contact form
+            </Link>
           </div>
         </section>
 
@@ -368,6 +371,28 @@ export default async function Home() {
           </div>
         </section>
       </main>
+      <footer className="border-t border-white/8 bg-[#040404] px-6 py-8 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
+            <Link href="#home" className="inline-flex items-center gap-3 self-start text-white/75 transition hover:text-white">
+              <Image src="/image.png" alt="Atlantic Interactive" width={32} height={32} className="opacity-80" />
+              <span className="text-sm font-semibold">Atlantic Interactive</span>
+            </Link>
+            <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-5 gap-y-3 text-xs text-white/42">
+              <Link className="transition hover:text-white/75" href="#games">Our Games</Link>
+              <Link className="transition hover:text-white/75" href="#services">Services</Link>
+              <Link className="transition hover:text-white/75" href="#careers">Careers</Link>
+              <Link className="transition hover:text-white/75" href="#contact">Contact</Link>
+              <a className="transition hover:text-white/75" href="https://x.com" target="_blank" rel="noreferrer">X</a>
+              <a className="transition hover:text-white/75" href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
+            </nav>
+          </div>
+          <div className="mt-7 flex flex-col gap-3 border-t border-white/8 pt-5 text-[11px] text-white/25 sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} Atlantic Interactive. All rights reserved.</p>
+            <div className="flex gap-5"><a className="transition hover:text-white/55" href="#">Privacy Policy</a><Link className="transition hover:text-white/55" href="#home">Back to top</Link></div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

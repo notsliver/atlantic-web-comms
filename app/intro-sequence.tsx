@@ -3,27 +3,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = "atlantic-intro-seen";
-
 export function IntroSequence() {
   const [phase, setPhase] = useState<"loading" | "visible" | "exiting" | "hidden">(
     "loading",
   );
 
   useEffect(() => {
-    try {
-      if (window.localStorage.getItem(STORAGE_KEY) === "1") {
-        const hiddenTimer = window.setTimeout(() => {
-          setPhase("hidden");
-        }, 0);
-        return () => {
-          window.clearTimeout(hiddenTimer);
-        };
-      }
-    } catch {
-      // If storage is unavailable, fall back to showing the intro once.
-    }
-
     const showTimer = window.setTimeout(() => {
       setPhase("visible");
     }, 0);
@@ -44,12 +29,6 @@ export function IntroSequence() {
     }
 
     const timeout = window.setTimeout(() => {
-      try {
-        window.localStorage.setItem(STORAGE_KEY, "1");
-      } catch {
-        // Ignore storage failures and continue.
-      }
-
       setPhase("hidden");
     }, 520);
 

@@ -66,14 +66,14 @@ export default async function Home() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="#games"
-                className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-black transition hover:bg-white/84"
+                className="hero-cta hero-cta-primary animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-black"
                 style={{ animationDelay: "0.28s" }}
               >
                 Explore Our Games
               </Link>
               <Link
                 href="#contact"
-                className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/38 hover:bg-white/8"
+                className="hero-cta hero-cta-secondary animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm"
                 style={{ animationDelay: "0.34s" }}
               >
                 Start a partnership

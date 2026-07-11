@@ -24,6 +24,21 @@ body.intro-pending {
   touch-action: none;
 }
 
+.hero-cta {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0) scale(1);
+  transition: transform .32s cubic-bezier(.22,1,.36,1), border-color .3s ease, background-color .3s ease, box-shadow .3s ease, filter .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-cta::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.3) 48%, transparent 70%); opacity: 0; transform: translateX(-80%); transition: transform .65s cubic-bezier(.22,1,.36,1), opacity .25s ease; }
+.hero-cta:hover { transform: translateY(-2px); }
+.hero-cta:hover::after { opacity: .55; transform: translateX(80%); }
+.hero-cta-primary:hover { background: rgba(255,255,255,.88); box-shadow: 0 10px 30px rgba(255,255,255,.12); }
+.hero-cta-secondary:hover { border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.08); box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.hero-cta:active { transform: translateY(1px) scale(.965); filter: brightness(.9); transition-duration: .1s; }
+.hero-cta:focus-visible { outline: 2px solid rgba(255,255,255,.85); outline-offset: 3px; }
+
 .mobile-menu-button { position: relative; z-index: 70; display: flex; width: 42px; height: 42px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(255,255,255,.14); border-radius: .5rem; background: rgba(0,0,0,.3); backdrop-filter: blur(12px); }
 .mobile-menu-button span { display: block; height: 1px; background: rgba(255,255,255,.82); transition: transform .4s cubic-bezier(.22,1,.36,1), width .35s ease, opacity .25s ease; }
 .mobile-menu-button span:nth-child(1) { width: 18px; }

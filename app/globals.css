@@ -68,10 +68,12 @@ body.intro-complete .site-content { opacity: 1; transform: none; transition: opa
 
 .site-header { transition: background-color .4s ease, border-color .4s ease; }
 .site-brand-logo { transform-origin: center; will-change: transform; }
-.site-brand:hover .site-brand-logo,
 .site-brand:focus-visible .site-brand-logo { animation: brand-orbit 1s cubic-bezier(.4,0,.2,1) both; }
 .site-brand.is-spinning .site-brand-logo { animation: brand-orbit .65s cubic-bezier(.4,0,.2,1) both; }
 @keyframes brand-orbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@media (hover: hover) and (pointer: fine) {
+  .site-brand:hover .site-brand-logo { animation: brand-orbit 1s cubic-bezier(.4,0,.2,1) both; }
+}
 .site-header-inner { transition: max-width .55s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), background-color .4s ease, border-color .4s ease, border-radius .45s ease, box-shadow .45s ease; }
 .site-header.is-island { position: fixed !important; top: .75rem; padding-inline: .75rem; border: 0; background: transparent; }
 .site-header.is-island .site-header-inner { max-width: 980px; padding: .65rem .8rem .65rem 1rem; border: 1px solid rgba(255,255,255,.13); border-radius: .85rem; background: rgba(7,7,7,.94); box-shadow: 0 14px 50px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.035); }

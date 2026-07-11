@@ -48,10 +48,14 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
 
     if (isIsland) {
       event.preventDefault();
-      if (!isTouch) {
-        scrollToTop();
-        return;
+      scrollToTop();
+      if (isTouch) {
+        setBrandSpinning(false);
+        window.requestAnimationFrame(() => setBrandSpinning(true));
+        if (brandTimer.current) window.clearTimeout(brandTimer.current);
+        brandTimer.current = window.setTimeout(() => setBrandSpinning(false), 650);
       }
+      return;
     } else if (!isTouch) {
       return;
     } else {
@@ -63,8 +67,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
     if (brandTimer.current) window.clearTimeout(brandTimer.current);
     brandTimer.current = window.setTimeout(() => {
       setBrandSpinning(false);
-      if (isIsland) scrollToTop();
-      else router.push("/");
+      router.push("/");
     }, 650);
   }
 

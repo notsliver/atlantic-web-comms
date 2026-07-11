@@ -7,9 +7,10 @@ function formatCount(value: number) { return new Intl.NumberFormat("en").format(
 export default async function GamesPage() {
   const stats = buildStudioStats(await fetchRobloxGameStats());
   return (
-    <main className="min-h-screen bg-[#050505] pb-20 text-white">
+    <>
       <SiteHeader />
-      <section className="mx-auto max-w-7xl px-6 pt-16 sm:px-8 lg:px-12">
+      <main className="site-content min-h-screen bg-[#050505] pb-20 text-white">
+        <section className="mx-auto max-w-7xl px-6 pt-16 sm:px-8 lg:px-12">
         <p className="text-sm font-medium text-white/42">Experiences</p>
         <h1 className="mt-3 max-w-3xl text-4xl font-semibold sm:text-6xl">Worlds built for repeat play.</h1>
         <p className="mt-5 max-w-2xl leading-7 text-white/58">Explore every Atlantic Interactive experience and jump directly into the games our players are enjoying.</p>
@@ -21,7 +22,8 @@ export default async function GamesPage() {
             </article>
           ))}
         </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   );
 }

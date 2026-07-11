@@ -32,7 +32,9 @@ export default async function Home() {
     .slice(0, 3);
 
   return (
-    <div className="bg-[#050505] text-white">
+    <>
+      <SiteHeader overlay />
+      <div className="site-content bg-[#050505] text-white">
       <section id="home" className="relative min-h-[92svh] overflow-hidden border-b border-white/10">
         <Image
           src="/background.png"
@@ -44,8 +46,6 @@ export default async function Home() {
           className="animate-hero-zoom object-cover opacity-80"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.58)_43%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.16)_55%,rgba(5,5,5,0.86)_100%)]" />
-
-        <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-7xl flex-col justify-end px-6 pb-10 pt-32 sm:px-8 lg:px-12">
           <div className="max-w-5xl pb-8 lg:pb-14">
@@ -331,6 +331,7 @@ export default async function Home() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import "./globals.css";
 import "lenis/dist/lenis.css";
 import { SmoothScroll } from "./smooth-scroll";
 import { IntroSequence } from "./intro-sequence";
+import { ScrollReveal } from "./scroll-reveal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
     >
       <body className="intro-pending min-h-full flex flex-col">
         <SmoothScroll />
+        <ScrollReveal />
         <IntroSequence />
         {children}
       </body>

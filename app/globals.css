@@ -24,6 +24,12 @@ body.intro-pending {
   touch-action: none;
 }
 
+.site-content { opacity: 0; transform: translateY(12px); }
+body.intro-complete .site-content { opacity: 1; transform: none; transition: opacity .8s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+.reveal-ready .scroll-reveal { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .85s cubic-bezier(.22,1,.36,1); }
+.reveal-ready .scroll-reveal.is-revealed { opacity: 1; transform: translateY(0); }
+.reveal-ready .game-showcase.scroll-reveal.is-revealed:hover { transform: translateY(-5px); }
+
 .hero-cta {
   position: relative;
   overflow: hidden;

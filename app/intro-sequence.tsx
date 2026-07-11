@@ -11,6 +11,7 @@ export function IntroSequence() {
   useEffect(() => {
     if (phase === "hidden") {
       document.body.classList.remove("intro-pending");
+      document.body.classList.add("intro-complete");
       return;
     }
 

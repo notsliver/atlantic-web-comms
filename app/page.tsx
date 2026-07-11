@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "./contact-form";
-import { IntroSequence } from "./intro-sequence";
 import { LiveStats } from "./live-stats";
-import { MobileNav } from "./mobile-nav";
+import { SiteHeader } from "./site-header";
 import {
   aboutServices,
   buildStudioStats,
@@ -28,11 +27,13 @@ function formatCount(value: number) {
 
 export default async function Home() {
   const initialStats = buildStudioStats(await fetchRobloxGameStats());
+  const featuredGames = studioGames
+    .map((game, index) => ({ game, liveStats: initialStats.games[index] }))
+    .sort((a, b) => (b.liveStats?.playing ?? b.game.fallbackPlayers) - (a.liveStats?.playing ?? a.game.fallbackPlayers))
+    .slice(0, 2);
 
   return (
     <div className="bg-[#050505] text-white">
-      <IntroSequence />
-
       <section id="home" className="relative min-h-[92svh] overflow-hidden border-b border-white/10">
         <Image
           src="/background.png"
@@ -45,49 +46,7 @@ export default async function Home() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.58)_43%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.16)_55%,rgba(5,5,5,0.86)_100%)]" />
 
-        <header className="absolute inset-x-0 top-0 z-50">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-12">
-            <Link
-              href="/"
-              className="flex items-center gap-3 text-white transition hover:opacity-80"
-            >
-              <Image
-                src="/image.png"
-                alt="Atlantic Interactive logo"
-                width={38}
-                height={38}
-                priority
-                className="h-9 w-9 object-contain"
-              />
-              <span className="hidden text-sm font-semibold uppercase sm:block">
-                Atlantic Interactive
-              </span>
-            </Link>
-
-            <nav aria-label="Primary" className="hidden md:block">
-              <ul className="flex items-center gap-7 text-sm font-medium text-white/62">
-                {[
-                  ["Home", "#home"],
-                  ["Our Games", "#games"],
-                  ["Services", "#services"],
-                  ["About", "#about"],
-                  ["Careers", "#careers"],
-                  ["Get in touch", "#contact"],
-                ].map(([item, href]) => (
-                  <li key={item}>
-                    <Link
-                      href={href}
-                      className="transition hover:text-white"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <MobileNav />
-          </div>
-        </header>
+        <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto flex min-h-[92svh] max-w-7xl flex-col justify-end px-6 pb-10 pt-32 sm:px-8 lg:px-12">
           <div className="max-w-5xl pb-8 lg:pb-14">
@@ -106,18 +65,18 @@ export default async function Home() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="#contact"
+                href="#games"
                 className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md bg-white px-5 text-sm font-semibold text-black transition hover:bg-white/84"
                 style={{ animationDelay: "0.28s" }}
               >
-                Start a partnership
+                Explore Our Games
               </Link>
               <Link
-                href="#games"
+                href="#contact"
                 className="animate-fade-up inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 bg-black/20 px-5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/38 hover:bg-white/8"
                 style={{ animationDelay: "0.34s" }}
               >
-                Explore Our Games
+                Start a partnership
               </Link>
             </div>
 
@@ -175,7 +134,7 @@ export default async function Home() {
             </div>
 
             <div className="mt-14 space-y-7">
-              {studioGames.map((game, index) => (
+              {featuredGames.map(({ game, liveStats }, index) => (
                 <article
                   key={game.name}
                   className="game-showcase group overflow-hidden rounded-xl border border-white/10 bg-[#090909]"
@@ -192,8 +151,8 @@ export default async function Home() {
                       </div>
                       <div className="mt-10">
                         <div className="game-showcase-stats grid grid-cols-2 border-y border-white/10 py-4">
-                          <div className="game-showcase-stat"><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.playing ?? game.fallbackPlayers)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Active players</span></div>
-                          <div className="game-showcase-stat border-l border-white/10 pl-5"><strong className="block text-xl font-semibold tabular-nums">{formatCount(initialStats.games[index]?.visits ?? game.fallbackVisits)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Total visits</span></div>
+                          <div className="game-showcase-stat"><strong className="block text-xl font-semibold tabular-nums">{formatCount(liveStats?.playing ?? game.fallbackPlayers)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Active players</span></div>
+                          <div className="game-showcase-stat border-l border-white/10 pl-5"><strong className="block text-xl font-semibold tabular-nums">{formatCount(liveStats?.visits ?? game.fallbackVisits)}</strong><span className="mt-1 block text-xs font-medium text-white/38">Total visits</span></div>
                         </div>
                         <a href={game.href} target="_blank" rel="noreferrer" className="game-showcase-cta mt-5 inline-flex min-h-11 w-full items-center justify-between rounded-md border border-white/18 bg-white/[0.05] px-4 text-sm font-semibold text-white"><span>{game.cta}</span><span aria-hidden="true">↗</span></a>
                       </div>
@@ -201,6 +160,12 @@ export default async function Home() {
                   </div>
                 </article>
               ))}
+            </div>
+            <div className="mt-8 flex justify-end">
+              <Link href="/games" className="group/catalog inline-flex items-center gap-4 border-b border-white/20 pb-2 text-sm font-semibold text-white/70 transition hover:border-white/60 hover:text-white">
+                View all games
+                <span aria-hidden="true" className="transition duration-300 group-hover/catalog:translate-x-1">→</span>
+              </Link>
             </div>
           </div>
         </section>
@@ -353,7 +318,7 @@ export default async function Home() {
               <span className="text-sm font-semibold">Atlantic Interactive</span>
             </Link>
             <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-5 gap-y-3 text-xs text-white/42">
-              <Link className="transition hover:text-white/75" href="#games">Our Games</Link>
+              <Link className="transition hover:text-white/75" href="/games">Our Games</Link>
               <Link className="transition hover:text-white/75" href="#services">Services</Link>
               <Link className="transition hover:text-white/75" href="#careers">Careers</Link>
               <Link className="transition hover:text-white/75" href="#contact">Contact</Link>

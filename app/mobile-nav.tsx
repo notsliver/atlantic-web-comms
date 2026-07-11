@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const links = [
-  ["Home", "#home"],
-  ["Our Games", "#games"],
-  ["Services", "#services"],
-  ["About", "#about"],
-  ["Careers", "#careers"],
-  ["Get in touch", "#contact"],
+  ["Home", "/#home"],
+  ["Our Games", "/games"],
+  ["Services", "/#services"],
+  ["About", "/#about"],
+  ["Careers", "/#careers"],
+  ["Get in touch", "/#contact"],
 ] as const;
 
 export function MobileNav() {

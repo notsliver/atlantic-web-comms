@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "lenis/dist/lenis.css";
 import { SmoothScroll } from "./smooth-scroll";
+import { IntroSequence } from "./intro-sequence";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
     >
       <body className="intro-pending min-h-full flex flex-col">
         <SmoothScroll />
+        <IntroSequence />
         {children}
       </body>
     </html>

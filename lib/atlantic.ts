@@ -26,6 +26,15 @@ export const studioGames = [
     fallbackVisits: 68_300_000,
     cta: "Enter the Duel",
   },
+    {
+    name: "Cut Grass for Anime Characters",
+    thumbnail: "/CutGrassforanimecharactersT.jpg",
+    href: "https://www.roblox.com/games/137422980844414/Cut-Grass-for-Anime-Characters",
+    universeId: 9889404689,
+    fallbackPlayers: 0,
+    fallbackVisits: 0,
+    cta: "Start Cutting",
+  },
 ] as const;
 
 export const aboutServices = [

@@ -216,7 +216,7 @@ export default async function Home() {
             </div>
             <div>
               <p className="max-w-2xl text-lg leading-8 text-white/66">
-                From first prototype to the millionth session, we help bold
+                From first prototype to the millions session, we help
                 Roblox teams make games worth returning to. Atlantic combines
                 hands-on production, creative instinct, and live player insight
                 to build worlds that feel alive—and stay that way.

@@ -19,6 +19,11 @@ body {
   color-scheme: dark;
 }
 
+body.intro-pending {
+  overflow: hidden;
+  touch-action: none;
+}
+
 body::before {
   content: "";
   position: fixed;

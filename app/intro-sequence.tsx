@@ -9,7 +9,10 @@ export function IntroSequence() {
   );
 
   useEffect(() => {
-    if (phase === "hidden") return;
+    if (phase === "hidden") {
+      document.body.classList.remove("intro-pending");
+      return;
+    }
 
     const previousBodyOverflow = document.body.style.overflow;
     const previousBodyTouchAction = document.body.style.touchAction;
@@ -55,7 +58,7 @@ export function IntroSequence() {
     };
   }, [phase]);
 
-  if (phase === "loading" || phase === "hidden") {
+  if (phase === "hidden") {
     return null;
   }
 

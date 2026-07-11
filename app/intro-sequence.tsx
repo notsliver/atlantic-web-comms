@@ -36,7 +36,7 @@ export function IntroSequence() {
 
     const dismissTimer = window.setTimeout(() => {
       setPhase((current) => (current === "visible" ? "exiting" : current));
-    }, 3600);
+    }, 1050);
 
     return () => {
       window.clearTimeout(showTimer);
@@ -51,7 +51,7 @@ export function IntroSequence() {
 
     const timeout = window.setTimeout(() => {
       setPhase("hidden");
-    }, 520);
+    }, 450);
 
     return () => {
       window.clearTimeout(timeout);
@@ -64,7 +64,7 @@ export function IntroSequence() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#050505] px-6 text-white transition duration-700 ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#050505] px-6 text-white transition duration-[450ms] ${
         phase === "exiting" ? "opacity-0" : "opacity-100"
       }`}
       role="dialog"

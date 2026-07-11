@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 const links = [
   ["Home", "/#home"],
@@ -14,7 +15,12 @@ const links = [
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const [portalReady, setPortalReady] = useState(false);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setPortalReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -34,8 +40,9 @@ export function MobileNav() {
         <span /><span /><span />
       </button>
 
-      <div id="mobile-navigation" className={`mobile-menu ${open ? "is-open" : ""}`} aria-hidden={!open}>
+      {portalReady ? createPortal(<div id="mobile-navigation" className={`mobile-menu ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="mobile-menu-atmosphere" />
+        <button type="button" className="mobile-menu-close" aria-label="Close navigation" onClick={() => setOpen(false)}><span /><span /></button>
         <div className="relative flex min-h-full flex-col px-6 pb-8 pt-28">
           <p className="text-xs font-medium text-white/35">Navigation</p>
           <nav aria-label="Mobile navigation" className="mt-7">
@@ -56,7 +63,7 @@ export function MobileNav() {
             <div className="flex gap-5"><a href="https://x.com" target="_blank" rel="noreferrer">X</a><a href="https://discord.com" target="_blank" rel="noreferrer">Discord</a></div>
           </div>
         </div>
-      </div>
+      </div>, document.body) : null}
     </div>
   );
 }

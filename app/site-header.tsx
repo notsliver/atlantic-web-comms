@@ -69,7 +69,7 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   }
 
   return (
-    <header className={`site-header ${isIsland ? "is-island" : ""} ${overlay ? "absolute" : "relative border-b border-white/10 bg-[#050505]"} inset-x-0 top-0 z-50`}>
+    <header className={`site-header ${isIsland ? "is-island" : ""} ${overlay ? "absolute" : "relative border-b border-white/10 bg-[#050505]"} inset-x-0 top-0 z-[70]`}>
       <div className="site-header-inner mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-12">
         <Link href="/" onClick={handleBrandClick} className={`site-brand flex items-center gap-3 text-white transition hover:opacity-80 ${brandSpinning ? "is-spinning" : ""}`}>
           <Image src="/image.png" alt="Atlantic Interactive logo" width={38} height={38} priority className="site-brand-logo h-9 w-9 object-contain" />

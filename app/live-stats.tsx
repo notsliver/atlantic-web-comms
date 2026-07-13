@@ -78,18 +78,19 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
   return (
     <div className="animate-fade-up mt-12 w-full max-w-4xl" style={{ animationDelay: "0.42s" }}>
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/38">
-        <span className="inline-flex items-center gap-2 font-medium text-white/62">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_16px_rgba(110,231,183,0.72)]" />
+        <span className="live-badge inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/[0.07] px-3 py-1.5 font-medium text-emerald-100">
+          <span className="live-dot h-1.5 w-1.5 rounded-full bg-emerald-300" />
           Live game analytics
         </span>
       </div>
 
-      <div className="grid border-y border-white/12 sm:grid-cols-3">
+      <div className="live-stats-grid grid overflow-hidden rounded-lg border border-white/12 bg-black/20 backdrop-blur-sm sm:grid-cols-3">
         {metrics.map((metric, index) => (
           <StatCard
             key={metric.label}
             label={metric.label}
             value={metric.value}
+            index={index}
             isFirst={index === 0}
           />
         ))}
@@ -101,17 +102,20 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
 function StatCard({
   label,
   value,
+  index,
   isFirst,
 }: {
   label: string;
   value: number;
+  index: number;
   isFirst: boolean;
 }) {
   const animatedValue = useAnimatedNumber(value);
 
   return (
     <article
-      className={`py-4 sm:px-5 ${
+      style={{ "--stat-index": index } as React.CSSProperties}
+      className={`live-stat-card px-4 py-4 sm:px-5 ${
         isFirst ? "" : "border-t border-white/12 sm:border-t-0 sm:border-l"
       }`}
     >
@@ -124,8 +128,8 @@ function StatCard({
 }
 
 function useAnimatedNumber(target: number) {
-  const [value, setValue] = useState(target);
-  const valueRef = useRef(target);
+  const [value, setValue] = useState(0);
+  const valueRef = useRef(0);
 
   useEffect(() => {
     valueRef.current = value;

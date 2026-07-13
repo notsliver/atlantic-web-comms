@@ -54,14 +54,14 @@ export default async function Home() {
               className="animate-fade-up text-5xl font-semibold leading-[0.96] text-balance sm:text-7xl lg:text-8xl"
               style={{ animationDelay: "0.08s" }}
             >
-              Atlantic Interactive
+              Powering Great Experiences
             </h1>
             <p
               className="animate-fade-up mt-6 max-w-2xl text-lg leading-8 text-white/72 sm:text-xl"
               style={{ animationDelay: "0.18s" }}
             >
-              We build the games players love, and empower the teams behind
-              them with production, LiveOps, analytics, and growth strategy.
+              We build games players love and empower the teams behind them
+              with production, LiveOps, analytics, and growth strategy.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

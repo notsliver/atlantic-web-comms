@@ -50,7 +50,6 @@ export function MobileNav() {
               {links.map(([label, href], index) => (
                 <li key={label} style={{ "--menu-index": index } as React.CSSProperties}>
                   <Link href={href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} className="mobile-menu-link">
-                    <span className="text-xs text-white/25">0{index + 1}</span>
                     <span>{label}</span>
                     <span aria-hidden="true" className="ml-auto text-lg text-white/25">↗</span>
                   </Link>

@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Eye, Gamepad2, UsersRound } from "lucide-react";
 import type { StudioStats } from "@/lib/atlantic";
 
 type LiveStatsProps = {
   initialStats: StudioStats;
+  fallbackStats?: StudioStats;
 };
 
 type MetricKey = keyof Pick<
@@ -18,11 +20,11 @@ const metricLabels: Array<{
 }> = [
   {
     key: "activePlayers",
-    label: "Playing Now",
+    label: "Active Players",
   },
   {
     key: "totalVisits",
-    label: "Visits",
+    label: "Total Visits",
   },
   {
     key: "activeGames",
@@ -30,11 +32,13 @@ const metricLabels: Array<{
   },
 ];
 
-export function LiveStats({ initialStats }: LiveStatsProps) {
-  const [stats, setStats] = useState(initialStats);
+export function LiveStats({ initialStats, fallbackStats }: LiveStatsProps) {
+  const [stats, setStats] = useState<StudioStats>(() => fallbackStats ?? initialStats);
+  const currentStats = stats ?? fallbackStats ?? initialStats;
 
   useEffect(() => {
     let active = true;
+    let timer: number | undefined;
 
     async function loadStats() {
       try {
@@ -51,28 +55,42 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
         if (active) {
           setStats(nextStats);
         }
-      } catch {}
+      } catch {
+        if (active) setStats(initialStats);
+      }
     }
 
-    void loadStats();
+    function startLiveUpdates() {
+      if (!active || timer !== undefined) return;
 
-    const timer = window.setInterval(() => {
       void loadStats();
-    }, 10000);
+      timer = window.setInterval(() => {
+        void loadStats();
+      }, 10000);
+    }
+
+    if (document.body.classList.contains("intro-complete")) {
+      startLiveUpdates();
+    } else {
+      window.addEventListener("atlantic:intro-complete", startLiveUpdates, {
+        once: true,
+      });
+    }
 
     return () => {
       active = false;
-      window.clearInterval(timer);
+      window.removeEventListener("atlantic:intro-complete", startLiveUpdates);
+      if (timer !== undefined) window.clearInterval(timer);
     };
-  }, []);
+  }, [initialStats]);
 
   const metrics = useMemo(
     () =>
       metricLabels.map((metric) => ({
         ...metric,
-        value: stats[metric.key],
+        value: currentStats[metric.key],
       })),
-    [stats],
+    [currentStats],
   );
 
   return (
@@ -88,6 +106,7 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
         {metrics.map((metric, index) => (
           <StatCard
             key={metric.label}
+            metricKey={metric.key}
             label={metric.label}
             value={metric.value}
             index={index}
@@ -100,17 +119,19 @@ export function LiveStats({ initialStats }: LiveStatsProps) {
 }
 
 function StatCard({
+  metricKey,
   label,
   value,
   index,
   isFirst,
 }: {
+  metricKey: MetricKey;
   label: string;
   value: number;
   index: number;
   isFirst: boolean;
 }) {
-  const animatedValue = useAnimatedNumber(value);
+  const { displayValue, isAnimating } = useAnimatedNumber(value);
 
   return (
     <article
@@ -120,30 +141,53 @@ function StatCard({
       }`}
     >
       <p className="text-2xl font-semibold text-white tabular-nums sm:text-3xl">
-        {formatCount(animatedValue)}
+        {formatCount(displayValue, isAnimating)}
       </p>
-      <p className="mt-1 text-xs font-medium text-white/42">{label}</p>
+      <p className="mt-1 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.08em] text-white/42">
+        <MetricIcon metricKey={metricKey} />
+        {label}
+      </p>
     </article>
   );
 }
 
+function MetricIcon({ metricKey }: { metricKey: MetricKey }) {
+  const props = {
+    "aria-hidden": true,
+    className: "h-[13px] w-[13px] shrink-0 text-emerald-300/80",
+    strokeWidth: 1.6,
+  } as const;
+
+  if (metricKey === "activePlayers") return <UsersRound {...props} />;
+  if (metricKey === "totalVisits") return <Eye {...props} />;
+  return <Gamepad2 {...props} />;
+}
+
 function useAnimatedNumber(target: number) {
-  const [value, setValue] = useState(0);
-  const valueRef = useRef(0);
+  const [value, setValue] = useState(target);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const valueRef = useRef(target);
+  const previousTarget = useRef(target);
 
   useEffect(() => {
     valueRef.current = value;
   }, [value]);
 
   useEffect(() => {
+    if (target === previousTarget.current) return;
+
     const from = valueRef.current;
-    const start = performance.now();
-    const duration = 1000;
+    const duration = 1800;
     let frame = 0;
+    const start = performance.now();
+    previousTarget.current = target;
+    setIsAnimating(true);
 
     const step = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const eased = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
       const nextValue = from + (target - from) * eased;
       valueRef.current = nextValue;
       setValue(nextValue);
@@ -153,6 +197,7 @@ function useAnimatedNumber(target: number) {
       } else {
         valueRef.current = target;
         setValue(target);
+        setIsAnimating(false);
       }
     };
 
@@ -163,13 +208,14 @@ function useAnimatedNumber(target: number) {
     };
   }, [target]);
 
-  return value;
+  return { displayValue: value, isAnimating };
 }
 
-function formatCount(value: number) {
+function formatCount(value: number, isAnimating = false) {
   const rounded = Math.round(value);
-  if (rounded >= 1_000_000_000) return `${(rounded / 1_000_000_000).toFixed(1).replace(".0", "")}B+`;
-  if (rounded >= 1_000_000) return `${(rounded / 1_000_000).toFixed(1).replace(".0", "")}M+`;
-  if (rounded >= 1_000) return `${(rounded / 1_000).toFixed(1).replace(".0", "")}K+`;
+  const precision = isAnimating ? 2 : 1;
+  if (rounded >= 1_000_000_000) return `${(rounded / 1_000_000_000).toFixed(precision).replace(/\.0+$/, "")}B+`;
+  if (rounded >= 1_000_000) return `${(rounded / 1_000_000).toFixed(precision).replace(/\.0+$/, "")}M+`;
+  if (rounded >= 1_000) return `${(rounded / 1_000).toFixed(precision).replace(/\.0+$/, "")}K+`;
   return new Intl.NumberFormat("en").format(rounded);
 }

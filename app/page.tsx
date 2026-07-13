@@ -27,6 +27,7 @@ function formatCount(value: number) {
 
 export default async function Home() {
   const initialStats = buildStudioStats(await fetchRobloxGameStats());
+  const fallbackStats = buildStudioStats(new Map());
   const featuredGames = studioGames
     .map((game, index) => ({ game, liveStats: initialStats.games[index] }))
     .sort((a, b) => (b.liveStats?.playing ?? b.game.fallbackPlayers) - (a.liveStats?.playing ?? a.game.fallbackPlayers))
@@ -80,7 +81,7 @@ export default async function Home() {
               </Link>
             </div>
 
-            <LiveStats initialStats={initialStats} />
+            <LiveStats initialStats={initialStats} fallbackStats={fallbackStats} />
           </div>
         </div>
       </section>

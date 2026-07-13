@@ -5,7 +5,7 @@ export const studioGames = [
     href: "https://www.roblox.com/games/103820982596314/Catch-A-Fade-2-SHOES#!/about",
     universeId: 10195887022,
     fallbackPlayers: 4_000,
-    fallbackVisits: 8_900_000,
+    fallbackVisits: 4_900_000,
     cta: "Jump Into the Fight",
   },
   {
@@ -14,7 +14,7 @@ export const studioGames = [
     href: "https://www.roblox.com/games/77747054101308/Expedition-Cave-Dive",
     universeId: 7677035096,
     fallbackPlayers: 200,
-    fallbackVisits: 1_400_000,
+    fallbackVisits: 3_400_000,
     cta: "Dive In",
   },
   {
@@ -23,7 +23,7 @@ export const studioGames = [
     href: "https://www.roblox.com/games/119068914321553/Traitor-VS-Sheriff-DUELS",
     universeId: 9741874508,
     fallbackPlayers: 3_390,
-    fallbackVisits: 68_300_000,
+    fallbackVisits: 60_300_000,
     cta: "Enter the Duel",
   },
   {
@@ -41,7 +41,7 @@ export const studioGames = [
     href: "https://www.roblox.com/games/121180020176396/Snatch-a-Seed",
     universeId: 8125244608,
     fallbackPlayers: 0,
-    fallbackVisits: 9_200_000,
+    fallbackVisits: 4_200_000,
     cta: "Play Snatch a Seed",
   },
 

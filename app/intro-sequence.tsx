@@ -12,6 +12,7 @@ export function IntroSequence() {
     if (phase === "hidden") {
       document.body.classList.remove("intro-pending");
       document.body.classList.add("intro-complete");
+      window.dispatchEvent(new Event("atlantic:intro-complete"));
       return;
     }
 
